@@ -38,7 +38,7 @@ func (opt *Options) OnExtension(ele xml.StartElement, protoTree []interface{}) (
 // EndExtension handles parsing event on the extension end elements.
 func (opt *Options) EndExtension(ele xml.EndElement, protoTree []interface{}) (err error) {
 	if opt.Attribute.Len() > 0 && opt.SimpleType.Peek() != nil {
-		opt.Attribute.Peek().(*Attribute).Type, err = opt.GetValueType(opt.SimpleType.Pop().(*SimpleType).Base, opt.ProtoTree)
+		opt.Attribute.Peek().(*Attribute).Type, err = opt.GetValueType(opt.SimpleType.Peek().(*SimpleType).Base, opt.ProtoTree)
 		if err != nil {
 			return
 		}

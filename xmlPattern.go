@@ -14,14 +14,14 @@ import "encoding/xml"
 // defines the exact sequence of characters that are acceptable.
 func (opt *Options) EndPattern(ele xml.EndElement, protoTree []interface{}) (err error) {
 	if opt.Attribute.Len() > 0 && opt.SimpleType.Peek() != nil {
-		opt.Attribute.Peek().(*Attribute).Type, err = opt.GetValueType(opt.SimpleType.Pop().(*SimpleType).Base, opt.ProtoTree)
+		opt.Attribute.Peek().(*Attribute).Type, err = opt.GetValueType(opt.SimpleType.Peek().(*SimpleType).Base, opt.ProtoTree)
 		if err != nil {
 			return
 		}
 		opt.CurrentEle = ""
 	}
 	if opt.SimpleType.Len() > 0 && opt.Element.Len() > 0 {
-		if opt.Element.Peek().(*Element).Type, err = opt.GetValueType(opt.SimpleType.Pop().(*SimpleType).Base, opt.ProtoTree); err != nil {
+		if opt.Element.Peek().(*Element).Type, err = opt.GetValueType(opt.SimpleType.Peek().(*SimpleType).Base, opt.ProtoTree); err != nil {
 			return
 		}
 		opt.CurrentEle = ""

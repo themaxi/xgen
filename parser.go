@@ -107,8 +107,8 @@ func (opt *Options) Parse() (err error) {
 
 		switch element := token.(type) {
 		case xml.StartElement:
-
 			opt.InElement = element.Name.Local
+
 			funcName := fmt.Sprintf("On%s", MakeFirstUpperCase(opt.InElement))
 			if err = callFuncByName(opt, funcName, []reflect.Value{reflect.ValueOf(element), reflect.ValueOf(opt.ProtoTree)}); err != nil {
 				return

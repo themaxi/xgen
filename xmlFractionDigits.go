@@ -16,7 +16,7 @@ import "encoding/xml"
 // than zero.
 func (opt *Options) EndFractionDigits(ele xml.EndElement, protoTree []interface{}) (err error) {
 	if opt.SimpleType.Len() > 0 && opt.Element.Len() > 0 {
-		if opt.Element.Peek().(*Element).Type, err = opt.GetValueType(opt.SimpleType.Pop().(*SimpleType).Base, opt.ProtoTree); err != nil {
+		if opt.Element.Peek().(*Element).Type, err = opt.GetValueType(opt.SimpleType.Peek().(*SimpleType).Base, opt.ProtoTree); err != nil {
 			return
 		}
 		opt.CurrentEle = ""

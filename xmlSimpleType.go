@@ -8,7 +8,9 @@
 
 package xgen
 
-import "encoding/xml"
+import (
+	"encoding/xml"
+)
 
 // OnSimpleType handles parsing event on the simpleType start elements. The
 // simpleType element defines a simple type and specifies the constraints and
@@ -31,18 +33,31 @@ func (opt *Options) OnSimpleType(ele xml.StartElement, protoTree []interface{}) 
 
 // EndSimpleType handles parsing event on the simpleType end elements.
 func (opt *Options) EndSimpleType(ele xml.EndElement, protoTree []interface{}) (err error) {
+
 	if opt.SimpleType.Len() > 0 && opt.Attribute.Len() > 0 {
 		opt.Attribute.Peek().(*Attribute).Type = opt.SimpleType.Pop().(*SimpleType).Base
 		return
 	}
-	if ele.Name.Local == opt.CurrentEle && opt.ComplexType.Len() == 1 {
+
+	if opt.ComplexType.Len() == 1 {
 		opt.ProtoTree = append(opt.ProtoTree, opt.ComplexType.Pop())
 		opt.CurrentEle = ""
 	}
 
-	if ele.Name.Local == opt.CurrentEle && !opt.InUnion {
+	if !opt.InUnion {
 		opt.ProtoTree = append(opt.ProtoTree, opt.SimpleType.Pop())
 		opt.CurrentEle = ""
 	}
+	// if ele.Name.Local == opt.CurrentEle && opt.ComplexType.Len() == 1 {
+	// 	fmt.Println("THIS1")
+	// 	opt.ProtoTree = append(opt.ProtoTree, opt.ComplexType.Pop())
+	// 	opt.CurrentEle = ""
+	// }
+
+	// if ele.Name.Local == opt.CurrentEle && !opt.InUnion {
+	// 	fmt.Println("THIS2")
+	// 	opt.ProtoTree = append(opt.ProtoTree, opt.SimpleType.Pop())
+	// 	opt.CurrentEle = ""
+	// }
 	return
 }

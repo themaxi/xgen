@@ -27,6 +27,7 @@ func (opt *Options) OnElement(ele xml.StartElement, protoTree []interface{}) (er
 
 		if attr.Name.Local == "name" {
 			e.Name = attr.Value
+			// fmt.Println(e, protoTree)
 		}
 		if attr.Name.Local == "type" {
 			e.Type, err = opt.GetValueType(attr.Value, protoTree)
